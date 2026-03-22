@@ -383,3 +383,11 @@ Entries:
       message: Added orchito - including liquid, drink, reaction and a task
   id: 54
   time: '2026-03-12T22:13:33.0000000+00:00'
+- author: Ceterai
+  changes:
+    - type: Tweak
+      message: >-
+        Обновлено описание операционного стола, которое больше не называет его
+        бесполезным.
+  id: 55
+  time: '2026-03-22T19:02:16.0000000+00:00'
