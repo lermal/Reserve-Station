@@ -3,14 +3,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Shared.Sound.Components;
-using Content.Shared._Reserve.EVENT020426;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.GameObjects;
 
 namespace Content.Goobstation.Server.Sound;
 
@@ -24,7 +22,6 @@ public sealed class RandomIntervalSoundSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -52,12 +49,6 @@ public sealed class RandomIntervalSoundSystem : EntitySystem
             if (Paused(uid))
                 continue;
 
-            if (comp.PlayingUntil != TimeSpan.Zero && now >= comp.PlayingUntil)
-            {
-                _appearance.SetData(uid, RandomIntervalSoundVisuals.Playing, false);
-                comp.PlayingUntil = TimeSpan.Zero;
-            }
-
             if (comp.NextSound != TimeSpan.Zero && now < comp.NextSound)
                 continue;
 
@@ -83,12 +74,7 @@ public sealed class RandomIntervalSoundSystem : EntitySystem
             }
 
             if (canPlay)
-            {
                 _audio.PlayPvs(comp.Sound, uid);
-                _appearance.SetData(uid, RandomIntervalSoundVisuals.Playing, true);
-
-                comp.PlayingUntil = now + TimeSpan.FromSeconds(16);
-            }
 
             comp.NextSound = now + GetInterval(comp);
         }
