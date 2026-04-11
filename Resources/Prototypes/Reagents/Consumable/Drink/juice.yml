@@ -232,7 +232,7 @@
   parent: BaseJuice
   desc: reagent-desc-juice-lime
   physicalDesc: reagent-physical-desc-citric
-flavor: sour
+  flavor: sour
   color: "#99bb43"
   metabolisms: #Goobstation start
     Medicine:
