@@ -489,9 +489,8 @@
     - Sign
     - Schechi
     - NewKinPidgin
-  - type: SpeechSynthesis # Corvax-Frontier-Barks
-    voice: Borg
->>>>>>> goob-local/master
+  # - type: SpeechSynthesis # Corvax-Frontier-Barks - Disabled: component not available
+  #   voice: Borg
 
 # Hologram projection that the AI's eye tracks.
 - type: entity

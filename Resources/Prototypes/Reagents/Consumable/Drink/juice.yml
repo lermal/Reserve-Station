@@ -166,7 +166,7 @@
       - !type:SatiateThirst
         factor: 2
       - !type:AdjustReagent
-reagent: Oculine
+        reagent: Oculine
         amount: 0.5
       - !type:AdjustReagent
         reagent: Nutriment
@@ -232,7 +232,7 @@ reagent: Oculine
   parent: BaseJuice
   desc: reagent-desc-juice-lime
   physicalDesc: reagent-physical-desc-citric
-flavor: sour
+  flavor: sour
   color: "#99bb43"
   metabolisms: #Goobstation start
     Medicine:
