@@ -12,9 +12,13 @@
 // SPDX-License-Identifier: MIT
 using Robust.Shared.GameStates; // Goobstation
 
-namespace Content.Goobstation.Common.Religion
+namespace Content.Goobstation.Common.Religion;
+
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class BibleUserComponent : Component
 {
     /// <summary>
+<<<<<<< HEAD
     /// EntityQuery Tracking Component for Summonables that are counting up a respawn.
     /// </summary>
     [RegisterComponent]
@@ -25,4 +29,10 @@ namespace Content.Goobstation.Common.Religion
     public sealed partial class BibleUserComponent : Component
     {
     }
+=======
+    /// Bound Nullrod
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public EntityUid? NullRod;
+>>>>>>> goob-local/master
 }
