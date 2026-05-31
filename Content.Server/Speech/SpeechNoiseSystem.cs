@@ -27,7 +27,13 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Random;
-using Content.Shared._White.Bark.Components;
+using Content.Shared._White.Bark.Components; // Reserve
+
+// Goob Station
+//using Content.Goobstation.Common.Barks; // Reserve
+using Content.Goobstation.Common.CCVar;
+using Robust.Shared.Configuration;
+
 
 namespace Content.Server.Speech
 {
@@ -46,7 +52,7 @@ namespace Content.Server.Speech
             base.Initialize();
 
             SubscribeLocalEvent<SpeechComponent, EntitySpokeEvent>(OnEntitySpoke);
-            Subs.CVar(_cfg, GoobCVars.BarksEnabled, x => _barksEnabled = x, true); // Goob
+            // Subs.CVar(_cfg, GoobCVars.BarksEnabled, x => _barksEnabled = x, true); // Goob // Commented - Reserve
         }
 
         public SoundSpecifier? GetSpeechSound(Entity<SpeechComponent> ent, string message)

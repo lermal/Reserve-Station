@@ -84,6 +84,8 @@ public sealed class EntityEffectSystem : EntitySystem
     [Dependency] private readonly VomitSystem _vomit = default!;
     [Dependency] private readonly TurfSystem _turf = default!; //todo Goobstation? The only thing im using this for is meant to be in RT? Fix if you havent
     [Dependency] private readonly ZombieSystem _zombie = default!; // Goob - zombie cure
+    [Dependency] private readonly BodySystem _bodySystem = default!; // Reserve
+    [Dependency] private readonly ContainerSystem _containerSystem = default!; // Reserve
 
     public override void Initialize()
     {
@@ -102,7 +104,7 @@ public sealed class EntityEffectSystem : EntitySystem
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantAdjustWater>>(OnExecutePlantAdjustWater);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantAdjustWeeds>>(OnExecutePlantAdjustWeeds);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantAffectGrowth>>(OnExecutePlantAffectGrowth);
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantClearMutations>>(OnExecutePlantClearMutations);
+        SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantClearMutations>>(OnExecutePlantClearMutations); // Reserve
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantChangeStat>>(OnExecutePlantChangeStat);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantCryoxadone>>(OnExecutePlantCryoxadone);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantDestroySeeds>>(OnExecutePlantDestroySeeds);
@@ -136,7 +138,7 @@ public sealed class EntityEffectSystem : EntitySystem
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantSpeciesChange>>(OnExecutePlantSpeciesChange);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PolymorphEffect>>(OnExecutePolymorph);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<ResetNarcolepsy>>(OnExecuteResetNarcolepsy);
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<Content.Shared._Reserve.EntityEffects.Effects.SpaceAdaptation>>(OnExecuteSpaceAdaptation);
+        SubscribeLocalEvent<ExecuteEntityEffectEvent<Content.Shared._Reserve.EntityEffects.Effects.SpaceAdaptation>>(OnExecuteSpaceAdaptation); // Reserve
     }
 
     private void OnCheckTemperature(ref CheckEntityEffectConditionEvent<TemperatureCondition> args)

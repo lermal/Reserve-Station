@@ -8,26 +8,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Shared.Emoting;
-using Content.Goobstation.Shared.Projectiles;
 using Content.Server.Chat.Systems;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Chat.Prototypes;
-using Content.Shared.Damage.Components;
-using Content.Shared.Stunnable;
 using Robust.Shared.Prototypes;
 
 namespace Content.Goobstation.Server.Emoting;
 
 public sealed partial class AnimatedEmotesSystem : SharedAnimatedEmotesSystem
 {
-    [Dependency] private readonly BatterySystem _battery = default!;
-
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<AnimatedEmotesComponent, EmoteEvent>(OnEmote);
-        SubscribeLocalEvent<AnimatedEmotesComponent, BorgFlippingEvent>(OnBeforeEmote);
     }
 
     private void OnEmote(Entity<AnimatedEmotesComponent> ent, ref EmoteEvent args)
