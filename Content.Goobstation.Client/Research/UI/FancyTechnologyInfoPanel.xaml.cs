@@ -68,7 +68,7 @@ public sealed partial class FancyTechnologyInfoPanel : Control
         );
 
         ResearchButton.Disabled = !hasAccess || availability != ResearchAvailability.Available;
-        ResearchButton.OnPressed += OnResearchPressed; // Reserve edit: rnd-console #
+        ResearchButton.OnPressed += OnResearchPressed; // Reserve edit: rnd-console #344
     }
 
     private void InitializePrerequisites(TechnologyPrototype proto, ResearchSystem research, SpriteSystem sprite)
@@ -99,10 +99,10 @@ public sealed partial class FancyTechnologyInfoPanel : Control
     {
         base.ExitedTree();
 
-        ResearchButton.OnPressed -= OnResearchPressed; // Reserve edit: rnd-console #
+    ResearchButton.OnPressed -= OnResearchPressed; // Reserve edit: rnd-console #344
     }
 
-    // Reserve edit start: rnd-console
+    // Reserve edit start: rnd-console #344
     private void OnResearchPressed(BaseButton.ButtonEventArgs args)
         => TryResearch();
 
@@ -113,6 +113,6 @@ public sealed partial class FancyTechnologyInfoPanel : Control
 
         BuyAction?.Invoke(Prototype);
     }
-    // Reserve edit end: rnd-console
+    // Reserve edit end: rnd-console #344
 
 }
