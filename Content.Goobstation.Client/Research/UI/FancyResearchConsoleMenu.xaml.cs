@@ -24,8 +24,11 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Configuration; // Reserve edit: rnd-console #
 using Robust.Shared.Input;
+using Robust.Shared; // Reserve edit: rnd-console #
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing; // Reserve edit: rnd-console #
 using Robust.Shared.Utility;
 
 namespace Content.Goobstation.Client.Research.UI;
@@ -39,6 +42,8 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IGameTiming _timing = default!; // Reserve edit: rnd-console #
+    [Dependency] private readonly IConfigurationManager _cfg = default!; // Reserve edit: rnd-console #
 
     private readonly ResearchSystem _research;
     private readonly SpriteSystem _sprite;
@@ -80,6 +85,9 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
     private const float MaxZoom = 2f;
     private const float ZoomSpeed = 0.125f;
 
+    private string? _lastClickedTechId; // Reserve edit: rnd-console #
+    private TimeSpan _lastClickTime; // Reserve edit: rnd-console #
+
     public FancyResearchConsoleMenu()
     {
         RobustXamlLoader.Load(this);
@@ -115,9 +123,7 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
             var control = new FancyResearchConsoleItem(proto, _sprite, tech.Value);
             DragContainer.AddChild(control);
 
-            // Set position for all tech, relating to _position
-            LayoutContainer.SetPosition(control, _position + proto.Position * 150 * _zoom);
-            control.SetScale(_zoom); // Reserve edit: rnd-console #
+            ApplyItemLayout(control); // Reserve edit: rnd-console #
             control.SelectAction += SelectTech;
 
             if (tech.Key == CurrentTech)
@@ -208,15 +214,7 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
         if (MathHelper.CloseTo(oldZoom, _zoom))
             return;
 
-        foreach (var child in DragContainer.Children)
-        {
-            if (child is not FancyResearchConsoleItem research)
-                continue;
-
-            var pos = research.Prototype.Position * 150;
-            LayoutContainer.SetPosition(child, _position + pos * _zoom);
-            research.SetScale(_zoom);
-        }
+        ApplyZoomToAllItems(); // Reserve edit: rnd-console #
         args.Handle();
     }
 
@@ -249,15 +247,57 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
     /// <param name="availability">Tech availablity</param>
     public void SelectTech(TechnologyPrototype proto, ResearchAvailability availability)
     {
-        InfoContainer.RemoveAllChildren();
+        // Reserve edit start: rnd-console
+        var now = _timing.RealTime;
+        var delay = TimeSpan.FromMilliseconds(_cfg.GetCVar(CVars.DoubleClickDelay));
+        var isDoubleClick = _lastClickedTechId == proto.ID && now - _lastClickTime <= delay;
+
+        _lastClickedTechId = proto.ID;
+        _lastClickTime = now;
+
         if (!_player.LocalEntity.HasValue)
+        {
+            InfoContainer.RemoveAllChildren();
             return;
+        }
 
         CurrentTech = proto.ID;
-        var control = new FancyTechnologyInfoPanel(proto, _accessReader.IsAllowed(_player.LocalEntity.Value, Entity), availability, _sprite);
+        var control = OpenInfoPanel(proto, availability);
+
+        if (isDoubleClick)
+            control.TryResearch();
+        // Reserve edit end: rnd-console
+    }
+
+    // Reserve edit start: rnd-console
+    private FancyTechnologyInfoPanel OpenInfoPanel(TechnologyPrototype proto, ResearchAvailability availability)
+    {
+        InfoContainer.RemoveAllChildren();
+
+        var control = new FancyTechnologyInfoPanel(proto, _accessReader.IsAllowed(_player.LocalEntity!.Value, Entity), availability, _sprite);
         control.BuyAction += args => OnTechnologyCardPressed?.Invoke(args.ID);
         InfoContainer.AddChild(control);
+        return control;
     }
+
+    private Vector2 GetItemPosition(TechnologyPrototype proto)
+        => _position + proto.Position * 150 * _zoom;
+
+    private void ApplyItemLayout(FancyResearchConsoleItem item)
+    {
+        LayoutContainer.SetPosition(item, GetItemPosition(item.Prototype));
+        item.SetScale(_zoom);
+    }
+
+    private void ApplyZoomToAllItems()
+    {
+        foreach (var child in DragContainer.Children)
+        {
+            if (child is FancyResearchConsoleItem research)
+                ApplyItemLayout(research);
+        }
+    }
+    // Reserve edit end: rnd-console
 
     /// <summary>
     /// Sets <see cref="_position"/> to its default value
@@ -265,20 +305,14 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
     public void Recenter()
     {
         _position = new(45, 250);
-        foreach (var item in DragContainer.Children)
-        {
-            if (item is not FancyResearchConsoleItem research)
-                continue;
-
-            LayoutContainer.SetPosition(item, _position + research.Prototype.Position * 150 * _zoom);
-            research.SetScale(_zoom); // Reserve edit: rnd-console #
-        }
+        ApplyZoomToAllItems(); // Reserve edit: rnd-console #
     }
 
     public override void Close()
     {
         base.Close();
 
+        _lastClickedTechId = null; // Reserve edit: rnd-console #
         DragContainer.RemoveAllChildren();
         InfoContainer.RemoveAllChildren();
     }
