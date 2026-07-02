@@ -117,6 +117,7 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
 
             // Set position for all tech, relating to _position
             LayoutContainer.SetPosition(control, _position + proto.Position * 150 * _zoom);
+            control.SetScale(_zoom); // Reserve edit: rnd-console #
             control.SelectAction += SelectTech;
 
             if (tech.Key == CurrentTech)
@@ -188,6 +189,12 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
     protected override void MouseWheel(GUIMouseWheelEventArgs args)
     {
         base.MouseWheel(args);
+
+        // Reserve edit start: rnd-console #
+        var mousePos = args.GlobalPixelPosition.Position;
+        if (!DragContainer.GlobalPixelRect.Contains((int) mousePos.X, (int) mousePos.Y))
+            return;
+        // Reserve edit end: rnd-console #
 
         var oldZoom = _zoom;
 
@@ -264,6 +271,7 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
                 continue;
 
             LayoutContainer.SetPosition(item, _position + research.Prototype.Position * 150 * _zoom);
+            research.SetScale(_zoom); // Reserve edit: rnd-console #
         }
     }
 
