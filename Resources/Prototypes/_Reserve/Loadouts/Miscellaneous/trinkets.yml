@@ -809,7 +809,7 @@
       time: 2700000 # 750hr
   storage:
     back:
-    - DrinkEnergyReserveRobustCan
+    - DrinkBrepsiCan
   groupBy: "drinks"
 
 # endregion
@@ -1256,7 +1256,7 @@
         - ReagentId: Sugar
           Quantity: 5
         - ReagentId: BacchusBlessing
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   parent: FoodSnackLollypopOrchito
