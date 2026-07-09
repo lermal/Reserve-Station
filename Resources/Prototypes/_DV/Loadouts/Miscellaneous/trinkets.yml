@@ -24,6 +24,7 @@
   storage:
     back:
     - WhiteCane
+  groupBy: "canes"  # Reserve edit: Better trinket loadout
 
 - type: loadout
   id: TapeRecorder

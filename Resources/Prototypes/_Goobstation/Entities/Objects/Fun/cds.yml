@@ -70,6 +70,8 @@
   name: cd disk (Cargonia)
   id: CdDiskCargonia
   components:
+  - type: Sprite
+    color: "#ffc833"  # Reserve edit: Better trinket loadout
   - type: Vinyl
     song:
       path: /Audio/_Goobstation/RadioStation/ads/Cargonia.ogg
@@ -142,6 +144,8 @@
   name: cd disk (security psa)
   id: CdDiskSecurityPsa
   components:
+  - type: Sprite
+    color: "#ff4833"  # Reserve edit: Better trinket loadout
   - type: Vinyl
     song:
       path: /Audio/_Goobstation/RadioStation/ads/security_psa.ogg
