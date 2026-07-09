@@ -220,14 +220,14 @@
   - PlushieSharkGrey
   - PlushieSharkPink
   - PlushieSharkRainbow
-  - VinylSleeve
-  - VinylSleeveGold
-  - DiskCaseFilled
-  - DiskCaseGold
+  - PlushieGhostRainbow
+  - PlushieBread
+  - PlushiePiano
+  - PlushieBehonkerEye
+  - PlushieChest
+  - PlushieAI
   - MetalRing
   - PlasticRing
-  - FakeDiamondRing
-  - FakeRubyRing
   - PokerChips50
   - AceOfSpades
   - MysteryFigureBox
@@ -243,7 +243,9 @@
   - ReserveRobustCan
   - Rag
   - RagGold
+  - UtensilSetGold
   - Skub
+  - ClothingHeadHatPartyWaterCup
   - MaterialCotton
   - CigarGoldCase
   - Vape
@@ -276,11 +278,38 @@
   # Begin DeltaV Additions
   - GoldRing
   - SilverRing
-  - Cane
   - WhiteCane
   - TapeRecorder
   - DrinkOniGourd
   # End DeltaV Additions
+  # Reserve edit start: Better trinket loadout
+  - VinylSleeve
+  - VinylSleeveGold
+  - DiskCaseFilled
+  - DiskCaseGold
+  - OcarinaBlue
+  - MicrophoneMicro
+  - FakeDiamondRing
+  - FakeRubyRing
+  - MimeRing
+  - TomatoRing
+  - LoveRing
+  - RainbowRing
+  - FoodSnackLollypopOrchito
+  - FoodSnackLollypopBrepsi
+  - FoodSnackLollypopBacchusBlessing
+  - FoodSnackLollypopReserve
+  - FoodSnackLollypopMedical
+  - FoodSnackLollypopIce
+  - FoodSnackLollypopProtein
+  - FoodSnackSwirlLollipop
+  - TowelColorBorgNT
+  - TowelColorRoboticist
+  - TowelColorNT
+  - TowelColorCaptain
+  - TowelColorCentcom
+  - TowelColorOuterCommand
+  # Reserve edit end: Better trinket loadout
 
 - type: loadoutGroup
   id: Glasses
@@ -309,6 +338,8 @@
   - Snail
   - Hamster
   - MousePink
+  - CockroachBig
+  - MothroachCecropia
   # Reserve edit end: Better trinket loadout
 
 - type: loadoutGroup
