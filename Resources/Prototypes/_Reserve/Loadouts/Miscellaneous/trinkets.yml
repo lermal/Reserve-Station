@@ -1002,6 +1002,8 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
+  - type: StaticPrice
+    price: 20
 
 - type: loadout
   id: TowelColorBorgNT
