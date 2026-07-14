@@ -129,7 +129,7 @@ public abstract partial class SharedMartialArtsSystem
             Dirty(ent, emotes);
         }
 
-        ComboPopup(ent, target, proto.Name);
+        ComboPopup(ent, target, proto.ID); // Reserve edit: localization #
         ent.Comp.LastAttacks.Clear();
     }
 
@@ -151,7 +151,7 @@ public abstract partial class SharedMartialArtsSystem
         DoDamage(ent, target, proto.DamageType, proto.ExtraDamage * power, out _);
         _audio.PlayPvs(args.Sound, target);
         ApplyMultiplier(ent, args.AttackSpeedMultiplier, 0f, args.AttackSpeedMultiplierTime);
-        ComboPopup(ent, target, proto.Name);
+        ComboPopup(ent, target, proto.ID); // Reserve edit: localization #
         ent.Comp.LastAttacks.Clear();
     }
 
@@ -169,7 +169,7 @@ public abstract partial class SharedMartialArtsSystem
         _modifier.RefreshMovementSpeedModifiers(target);
         DoDamage(ent, target, proto.DamageType, proto.ExtraDamage * power, out _);
         _audio.PlayPvs(args.Sound, target);
-        ComboPopup(ent, target, proto.Name);
+        ComboPopup(ent, target, proto.ID); // Reserve edit: localization #
         ent.Comp.LastAttacks.Clear();
     }
 
@@ -215,7 +215,7 @@ public abstract partial class SharedMartialArtsSystem
             dir.Normalized() * args.ThrowRange * power,
             proto.ThrownSpeed,
             behavior: proto.DropItems);
-        ComboPopup(ent, target, proto.Name);
+        ComboPopup(ent, target, proto.ID); // Reserve edit: localization #
         ent.Comp.LastAttacks.Clear();
     }
 

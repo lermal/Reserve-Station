@@ -62,7 +62,7 @@ public abstract partial class SharedMartialArtsSystem
         _stun.TryUpdateParalyzeDuration(target, TimeSpan.FromSeconds(proto.ParalyzeTime));
         DoDamage(ent, target, proto.DamageType, proto.ExtraDamage, out _);
         _audio.PlayPvs(args.Sound, target);
-        ComboPopup(ent, target, proto.Name);
+        ComboPopup(ent, target, proto.ID); // Reserve edit: localization #
         ent.Comp.LastAttacks.Clear();
     }
 
@@ -85,7 +85,7 @@ public abstract partial class SharedMartialArtsSystem
         }
 
         _audio.PlayPvs(args.Sound, target);
-        ComboPopup(ent, target, proto.Name);
+        ComboPopup(ent, target, proto.ID); // Reserve edit: localization #
         ent.Comp.LastAttacks.Clear();
     }
 
@@ -99,7 +99,7 @@ public abstract partial class SharedMartialArtsSystem
         _stamina.TakeStaminaDamage(target, proto.StaminaDamage, applyResistances: true);
         DoDamage(ent, target, proto.DamageType, proto.ExtraDamage, out _);
         _audio.PlayPvs(args.Sound, target);
-        ComboPopup(ent, target, proto.Name);
+        ComboPopup(ent, target, proto.ID); // Reserve edit: localization #
         ent.Comp.LastAttacks.Clear();
     }
 }
