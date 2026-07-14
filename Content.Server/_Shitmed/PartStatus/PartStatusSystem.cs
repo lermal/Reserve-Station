@@ -143,7 +143,7 @@ public sealed class PartStatusSystem : EntitySystem
             if (!TryComp<BodyPartComponent>(woundable, out var bodyPartComponent))
                 continue;
 
-            // Reserve edit start: localization #
+            // Reserve edit start: localization #359
             var boneSeverity = BoneSeverity.Normal;
             if (!HasComp<BonelessComponent>(woundable))
             {
@@ -152,7 +152,7 @@ public sealed class PartStatusSystem : EntitySystem
 
                 boneSeverity = bone.BoneSeverity;
             }
-            // Reserve edit end: localization #
+            // Reserve edit end: localization #359
 
             var partName = bodyPartComponent.ParentSlot?.Id ?? bodyPartComponent.PartType.ToString().ToLower();
             var (damageSeverities, isBleeding) = AnalyzeWounds(woundable);
@@ -163,7 +163,7 @@ public sealed class PartStatusSystem : EntitySystem
                 partName,
                 woundable.Comp.WoundableSeverity,
                 damageSeverities,
-                boneSeverity, // Reserve edit: localization #
+                boneSeverity, // Reserve edit: localization #359
                 isBleeding));
         }
 
@@ -182,12 +182,12 @@ public sealed class PartStatusSystem : EntitySystem
                 || wound.Comp.WoundSeverity == WoundSeverity.Healed)
                 continue;
 
-            // Reserve edit start: localization #
+            // Reserve edit start: localization #359
             var groupId = wound.Comp.DamageGroup.Value.Id;
             if (!damageSeverities.TryGetValue(groupId, out var existingSeverity) ||
                 wound.Comp.WoundSeverity > existingSeverity)
                 damageSeverities[groupId] = wound.Comp.WoundSeverity;
-            // Reserve edit end: localization #
+            // Reserve edit end: localization #359
 
             if (TryComp<BleedInflicterComponent>(wound, out var bleeds) && bleeds.IsBleeding)
                 isBleeding = true;
@@ -255,7 +255,7 @@ public sealed class PartStatusSystem : EntitySystem
                 locString += "-styleless";
             }
 
-            // Reserve edit start: localization #
+            // Reserve edit start: localization #359
             var partKey = "body-part-" + partStatus.PartName.Replace(" ", "-");
             var partName = Loc.TryGetString(partKey, out var localizedPart)
                 ? localizedPart
@@ -265,7 +265,7 @@ public sealed class PartStatusSystem : EntitySystem
                 ("possessive", possessive),
                 ("part", partName),
                 ("status", statusDescription)));
-            // Reserve edit end: localization #
+            // Reserve edit end: localization #359
 
             message.PushNewline();
         }

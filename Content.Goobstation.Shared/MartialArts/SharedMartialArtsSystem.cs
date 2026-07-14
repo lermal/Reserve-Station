@@ -442,7 +442,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
             return;
         var userName = Identity.Entity(user, EntityManager);
         var targetName = Identity.Entity(target, EntityManager);
-        // Reserve edit start: localization #
+        // Reserve edit start: localization #359
         string locComboName;
         if (Loc.TryGetString(comboName, out var name))
             locComboName = name;
@@ -461,7 +461,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
             ("move", locComboName)),
             target,
             target);
-        // Reserve edit end: localization #
+        // Reserve edit end: localization #359
     }
 
     #endregion

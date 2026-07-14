@@ -243,7 +243,7 @@ public abstract partial class SharedMartialArtsSystem
 
         DoDamage(ent, target, proto.DamageType, proto.ExtraDamage * GetDamageMultiplier(ent), out _);
         _audio.PlayPvs(args.Sound, target);
-        ComboPopup(ent, target, proto.ID); // Reserve edit: localization #
+        ComboPopup(ent, target, proto.ID); // Reserve edit: localization #359
         ent.Comp.LastAttacks.Clear();
     }
 
@@ -265,7 +265,7 @@ public abstract partial class SharedMartialArtsSystem
         _stun.TryKnockdown(target, TimeSpan.FromSeconds(proto.ParalyzeTime), true, true, proto.DropItems);
         DoDamage(ent, target, proto.DamageType, proto.ExtraDamage * GetDamageMultiplier(ent), out _);
         _audio.PlayPvs(args.Sound, target);
-        ComboPopup(ent, target, proto.ID); // Reserve edit: localization #
+        ComboPopup(ent, target, proto.ID); // Reserve edit: localization #359
         ent.Comp.LastAttacks.Clear();
     }
 
