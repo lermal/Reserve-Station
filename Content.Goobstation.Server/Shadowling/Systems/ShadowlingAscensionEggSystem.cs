@@ -11,6 +11,7 @@ using Content.Goobstation.Shared.Shadowling.Components.Abilities.Thrall;
 using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Chat.Systems;
+using Content.Server.GameTicking;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Pinpointer;
@@ -20,6 +21,7 @@ using Content.Server.Storage.EntitySystems;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Destructible;
 using Content.Shared.Examine;
 using Content.Shared.Light.Components;
@@ -54,6 +56,8 @@ public sealed class ShadowlingAscensionEggSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly ServerGlobalSoundSystem _globalSound = default!;
+
+    private EntProtoId _nightmareAbilities = "NightmareAbilities";
 
     public override void Initialize()
     {
@@ -225,6 +229,8 @@ public sealed class ShadowlingAscensionEggSystem : EntitySystem
             thralls.Add(thrallUid);
         }
 
+        // goob note: ??????? this is stupid and will not work as expected with multiple shadowlings..
+        // they shouldnt all ascend at once......
         foreach (var sling in shadowlings)
         {
             var newUid = _polymorph.PolymorphEntity(sling, "ShadowlingAscendantPolymorph");
@@ -234,13 +240,13 @@ public sealed class ShadowlingAscensionEggSystem : EntitySystem
                 continue;
 
             ascendant.CurrentPhase = ShadowlingPhases.Ascension;
+            ascendant.TimeAscended = _timing.CurTime;
             _shadowling.OnPhaseChanged(newUid.Value, ascendant, ShadowlingPhases.Ascension);
 
             _actions.RemoveAction(ascendant.ActionHatchEntity);
         }
 
-        var nightmareAbilities = "NightmareAbilities";  // Reserve edit: Fix warnings
-        var nightmareComps = _protoMan.Index(nightmareAbilities);  // Reserve edit: Fix warnings
+        var nightmareComps = _protoMan.Index(_nightmareAbilities);
         foreach (var thrall in thralls)
         {
             if (HasComp<LesserShadowlingComponent>(thrall))
