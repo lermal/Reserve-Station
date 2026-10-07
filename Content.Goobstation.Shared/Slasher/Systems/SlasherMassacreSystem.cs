@@ -1,4 +1,4 @@
-using Content.Goobstation.Shared.Slasher.Components;
+﻿using Content.Goobstation.Shared.Slasher.Components;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Systems;
 using Content.Shared.Actions;
@@ -24,6 +24,10 @@ using Robust.Shared.Timing;
 using Content.Shared.Humanoid;
 using Content.Goobstation.Maths.FixedPoint;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.EntityEffects;
+using Content.Shared.Movement.Components;
+using Content.Shared.StatusEffectNew;
+using Robust.Shared.Prototypes;
 
 namespace Content.Goobstation.Shared.Slasher.Systems;
 
@@ -32,6 +36,8 @@ namespace Content.Goobstation.Shared.Slasher.Systems;
 /// </summary>
 public sealed class SlasherMassacreSystem : EntitySystem
 {
+    public static EntProtoId SlasherEffect = "SlasherStatusEffectKillSpeed";
+
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly WoundSystem _wounds = default!;
@@ -40,10 +46,13 @@ public sealed class SlasherMassacreSystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
+    // [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!; // Reserve edit: Fix warnings
     [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    // [Dependency] private readonly StatusEffectsSystem _status = default!; // Reserve edit: Fix warnings
+    [Dependency] private readonly MovementModStatusSystem _movementModStatus = default!;
+
 
     public override void Initialize()
     {
@@ -262,26 +271,14 @@ public sealed class SlasherMassacreSystem : EntitySystem
         // Apply speed boost.
         if (speedBonus > 0)
         {
-            var speedComp = EnsureComp<MovespeedModifierMetabolismComponent>(user);
-            var speedMultiplier = 1f + speedBonus;
-            var endTime = _timing.CurTime + TimeSpan.FromSeconds(comp.SpeedBoostDuration);
-
-            // Only update if the modifier changed or we're extending the duration
-            if (speedComp.ModifierTimer < endTime)
-            {
-                speedComp.WalkSpeedModifier = speedMultiplier;
-                speedComp.SprintSpeedModifier = speedMultiplier;
-                speedComp.ModifierTimer = endTime;
-
-                Dirty(user, speedComp);
-                _movementSpeed.RefreshMovementSpeedModifiers(user);
-            }
+            // Upstreamer fix i don't even know if this works, untested, if slasher speed is breaking fix this up here.
+            _movementModStatus.TryUpdateMovementSpeedModDuration(user, SlasherEffect, TimeSpan.FromSeconds(comp.SpeedBoostDuration), 1 + speedBonus);
         }
 
         // Apply healing via slasherium
         if (healAmount > 0 && TryComp<BloodstreamComponent>(user, out var bloodstream))
-            if (_solutions.ResolveSolution(user, bloodstream.ChemicalSolutionName, ref bloodstream.ChemicalSolution))
-                _solutions.TryAddReagent(bloodstream.ChemicalSolution.Value,
+            if (_solutions.ResolveSolution(user, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution))
+                _solutions.TryAddReagent(bloodstream.BloodSolution.Value,
                     new ReagentId(comp.HealReagent, null),
                     FixedPoint2.New(healAmount),
                     out _);

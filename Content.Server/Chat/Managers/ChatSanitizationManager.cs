@@ -1,23 +1,3 @@
-// SPDX-FileCopyrightText: 2021 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2021 Moony <moonheart08@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2021 Venomii <hebert.parker.primary@gmail.com>
-// SPDX-FileCopyrightText: 2022 Michael Phillips <1194692+MeltedPixel@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 ZeroDayDaemon <60460608+ZeroDayDaemon@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 metalgearsloth <comedian_vs_clown@hotmail.com>
-// SPDX-FileCopyrightText: 2022 mirrorcult <lunarautomaton6@gmail.com>
-// SPDX-FileCopyrightText: 2022 ninruB <38016303+asperger-sind@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 router <konstttantin@gmail.com>
-// SPDX-FileCopyrightText: 2022 router <messagebus@vk.com>
-// SPDX-FileCopyrightText: 2022 wrexbe <81056464+wrexbe@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 Mr. 27 <45323883+27alaing@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 Whisper <121047731+QuietlyWhisper@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 James Simonson <jamessimo89@gmail.com>
-// SPDX-FileCopyrightText: 2024 Thomas <87614336+Aeshus@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 lzk <124214523+lzk228@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 tosatur <63034378+tosatur@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Diagnostics.CodeAnalysis;
@@ -61,6 +41,23 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         Entry( ")", "chatsan-smiles" ),
         Entry( "((", "chatsan-frowns-deeply" ),
         Entry( "(", "chatsan-frowns" ),
+        Entry("лол", "chatsan-laughs"),
+        Entry("ахах", "chatsan-laughs"),
+        Entry("хаха", "chatsan-laughs"),
+        Entry("хах", "chatsan-laughs"),
+        Entry("пхпх", "chatsan-laughs"),
+        Entry("хз", "chatsan-shrugs"),
+        Entry("[l", "chatsan-laughs"),
+        Entry("kjk", "chatsan-laughs"),
+        Entry("rtr", "chatsan-laughs"),
+        Entry("f[f[", "chatsan-laughs"),
+        Entry("[f[f", "chatsan-laughs"),
+        Entry("[f[", "chatsan-laughs"),
+        Entry("g[g[", "chatsan-laughs"),
+        Entry("[p", "chatsan-shrugs"),
+        Entry("kvfj", "chatsan-laughs"),
+        Entry("hjak", "chatsan-laughs"),
+        Entry("z[p", "chatsan-shrugs"),
         // Reserve-Localization-End
         Entry(":)", "chatsan-smiles"),
         Entry(":]", "chatsan-smiles"),
@@ -115,6 +112,7 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         Entry(".-.", "chatsan-confused"),
         Entry("-_-", "chatsan-unimpressed"),
         Entry("smh", "chatsan-unimpressed"),
+        Entry(":?", "chatsan-shrugs"),
         Entry("o/", "chatsan-waves"),
         Entry("^^/", "chatsan-waves"),
         Entry(":/", "chatsan-uncertain"),
@@ -127,7 +125,6 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         Entry("rofl", "chatsan-laughs"),
         Entry("o7", "chatsan-salutes"),
         Entry(";_;7", "chatsan-tearfully-salutes"),
-        Entry("idk", "chatsan-shrugs"),
         Entry(";)", "chatsan-winks"),
         Entry(";]", "chatsan-winks"),
         Entry("(;", "chatsan-winks"),

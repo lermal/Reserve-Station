@@ -1,9 +1,4 @@
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 deltanedas <39013340+deltanedas@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 deltanedas <@deltanedas:kde.org>
-// SPDX-FileCopyrightText: 2025 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
+﻿// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Common.DoAfter;
 using Content.Goobstation.Shared.Factory.Filters;
@@ -23,9 +18,9 @@ namespace Content.Goobstation.Shared.Factory;
 
 public abstract class SharedInteractorSystem : EntitySystem
 {
-    [Dependency] private readonly AutomationSystem _automation = default!;
+    // [Dependency] private readonly AutomationSystem _automation = default!; // Reserve edit: Fix warnings
     [Dependency] private readonly AutomationFilterSystem _filter = default!;
-    [Dependency] private readonly CollisionWakeSystem _wake = default!;
+    // [Dependency] private readonly CollisionWakeSystem _wake = default!; // Reserve edit: Fix warnings
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;

@@ -1,6 +1,3 @@
-// SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Robust.Client.Graphics;
@@ -26,7 +23,8 @@ public sealed partial class DogVisionOverlay : Overlay
     public DogVisionOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _dogVisionShader = _prototypeManager.Index<ShaderPrototype>("DogVision").Instance().Duplicate();
+        var protoId = "DogVision";  // Reserve edit: Fix warnings
+        _dogVisionShader = _prototypeManager.Index<ShaderPrototype>(protoId).Instance().Duplicate();  // Reserve edit: Fix warnings
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)

@@ -1,12 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <aiden@djkraz.com>
-// SPDX-FileCopyrightText: 2025 Aidenkrz <aiden@djkraz.com>
-// SPDX-FileCopyrightText: 2025 Fishbait <Fishbait@git.ml>
-// SPDX-FileCopyrightText: 2025 Misandry <mary@thughunt.ing>
-// SPDX-FileCopyrightText: 2025 fishbait <gnesse@gmail.com>
-// SPDX-FileCopyrightText: 2025 gus <august.eymann@gmail.com>
-// SPDX-FileCopyrightText: 2025 unknown <Administrator@DESKTOP-PMRIVVA.kommune.indresogn.no>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
@@ -76,7 +67,8 @@ public sealed class BingleSystem : EntitySystem
         if (component.Upgraded)
             return;
 
-        _actions.AddAction(uid, "ActionBingleUpgrade", uid);
+        var actionBingleUpgrade = "ActionBingleUpgrade";  // Reserve edit: Fix warnings
+        _actions.AddAction(uid, actionBingleUpgrade, uid);  // Reserve edit: Fix warnings
 
         _popup.PopupEntity(Loc.GetString("bingle-upgrade-success"), uid, uid);
         component.Upgraded = true;

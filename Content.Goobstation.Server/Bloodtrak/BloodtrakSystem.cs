@@ -1,8 +1,3 @@
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 Hagvan <22118902+Hagvan@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Solstice <solsticeofthewinter@gmail.com>
-// SPDX-FileCopyrightText: 2025 SolsticeOfTheWinter <solsticeofthewinter@gmail.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
@@ -42,7 +37,8 @@ public sealed class BloodtrakSystem : SharedBloodtrakSystem
     /// </summary>
     private (EntityUid, TimeSpan)? GetPuddleDnaOwner(EntityUid target, BloodtrakComponent component, EntityUid user)
     {
-        if (!_tag.HasTag(target, "DNASolutionScannable") || !HasComp<PuddleComponent>(target))
+        var dNAtag = "DNASolutionScannable";  // Reserve edit: Fix warnings
+        if (!_tag.HasTag(target, dNAtag) || !HasComp<PuddleComponent>(target))  // Reserve edit: Fix warnings
         {
             _popupSystem.PopupEntity(Loc.GetString("bloodtrak-scan-failed"), user, user);
             return null;

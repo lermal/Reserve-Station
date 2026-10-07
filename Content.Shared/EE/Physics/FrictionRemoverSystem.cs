@@ -1,10 +1,4 @@
-// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
-// SPDX-FileCopyrightText: 2024 DEATHB4DEFEAT <77995199+DEATHB4DEFEAT@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2024 VMSolidus <evilexecutive@gmail.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
+﻿// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -14,7 +8,7 @@ namespace Content.Shared.Physics;
 
 public sealed class FrictionRemoverSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    // [Dependency] private readonly SharedPhysicsSystem _physics = default!; // Reserve edit: Fix warnings
 
 
     public override void Initialize()

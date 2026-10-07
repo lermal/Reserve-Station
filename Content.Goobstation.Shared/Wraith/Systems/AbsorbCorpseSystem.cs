@@ -1,4 +1,4 @@
-using Content.Goobstation.Shared.Changeling.Components;
+﻿using Content.Goobstation.Shared.Changeling.Components;
 using Content.Goobstation.Shared.Wraith.Components;
 using Content.Goobstation.Shared.Wraith.Events;
 using Content.Goobstation.Shared.Wraith.WraithPoints;
@@ -26,8 +26,8 @@ public sealed partial class AbsorbCorpseSystem : EntitySystem
     [Dependency] private readonly SharedRottingSystem _rotting = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
-    [Dependency] private readonly SharedBodySystem _body = default!;
-    [Dependency] private readonly INetManager _netManager = default!;
+    // [Dependency] private readonly SharedBodySystem _body = default!; // Reserve edit: Fix warnings
+    // [Dependency] private readonly INetManager _netManager = default!; // Reserve edit: Fix warnings
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly ISharedAdminLogManager _admin = default!;
 
@@ -144,7 +144,7 @@ public sealed partial class AbsorbCorpseSystem : EntitySystem
     private bool RemoveReagent(EntityUid target, Entity<AbsorbCorpseComponent> ent)
     {
         if (!TryComp<BloodstreamComponent>(target, out var blood)
-            || !_solution.ResolveSolution(target, blood.ChemicalSolutionName, ref blood.ChemicalSolution, out var chemSolution))
+            || !_solution.ResolveSolution(target, blood.BloodSolutionName, ref blood.BloodSolution, out var chemSolution))
             return false;
 
         foreach (var (reagentId, qty) in chemSolution.Contents)
@@ -152,7 +152,7 @@ public sealed partial class AbsorbCorpseSystem : EntitySystem
             if (reagentId.Prototype != ent.Comp.Reagent || qty < ent.Comp.FormaldehydeThreshhold)
                     continue;
 
-            _solution.RemoveReagent(blood.ChemicalSolution.Value, reagentId, ent.Comp.ChemToRemove);
+            _solution.RemoveReagent(blood.BloodSolution.Value, reagentId, ent.Comp.ChemToRemove);
 
             _damageable.TryChangeDamage(ent.Owner, ent.Comp.Damage, ignoreResistances: true);
             _popup.PopupClient(Loc.GetString("wraith-absorb-tainted"), ent.Owner, ent.Owner, PopupType.MediumCaution);

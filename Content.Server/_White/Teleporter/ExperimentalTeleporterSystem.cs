@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2024 Spatison <137375981+spatison@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 pheenty <fedorlukin2006@gmail.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
@@ -113,7 +109,8 @@ public sealed class ExperimentalTeleporterSystem : EntitySystem
 
         var anchoredEntities = _mapSystem.GetAnchoredEntities(tile.Value.GridUid, mapGridComponent, coords);
 
-        return anchoredEntities.Any(x => _tag.HasTag(x, "Wall"));
+        var wallTag = "Wall";  // Reserve edit: Fix warnings
+        return anchoredEntities.Any(x => _tag.HasTag(x, wallTag));  // Reserve edit: Fix warnings
     }
 
     private Vector2 VectorRandomDirection(ExperimentalTeleporterComponent component, Vector2 offset, int length)

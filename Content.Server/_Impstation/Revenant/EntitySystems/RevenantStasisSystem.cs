@@ -1,4 +1,4 @@
-using Content.Goobstation.Common.Religion;
+﻿using Content.Goobstation.Common.Religion;
 using Content.Goobstation.Shared.Bible;
 using Content.Server.Bible;
 using Content.Server.Construction;
@@ -37,10 +37,11 @@ public sealed partial class RevenantStasisSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    // [Dependency] private readonly IPrototypeManager _protoMan = default!; // Reserve edit: Fix warnings
 
-    [ValidatePrototypeId<StatusEffectPrototype>]
-    private const string RevenantStasisId = "RevenantStasis";
+    private static readonly ProtoId<StatusEffectPrototype> RevenantStasisId = "RevenantStasis";
+    private static readonly string SaltTag = "Salt";  // Reserve edit - fix hardcoded values
+    private static readonly string HolyTag = "Holy";  // Reserve edit - fix hardcoded values
 
     public override void Initialize()
     {
@@ -131,7 +132,7 @@ public sealed partial class RevenantStasisSystem : EntitySystem
 
         foreach (var reagent in args.Reagents)
         {
-            if (_tags.HasAnyTag(reagent, "Salt", "Holy"))
+            if (_tags.HasAnyTag(reagent, SaltTag, HolyTag))
                 return;
         }
 

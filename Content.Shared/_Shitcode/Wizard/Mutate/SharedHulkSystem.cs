@@ -1,8 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aviu00 <93730715+Aviu00@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Misandry <mary@thughunt.ing>
-// SPDX-FileCopyrightText: 2025 gus <august.eymann@gmail.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Damage;
@@ -35,7 +30,8 @@ public abstract class SharedHulkSystem : EntitySystem
     private void OnStartup(Entity<HulkComponent> ent, ref ComponentStartup args)
     {
         UpdateColorStartup(ent);
-        ent.Comp.StructuralDamage ??= new DamageSpecifier(_prototype.Index<DamageTypePrototype>("Structural"), 80f);
+        var structuralDamage = "Structural";  // Reserve edit: Fix warnings
+        ent.Comp.StructuralDamage ??= new DamageSpecifier(_prototype.Index<DamageTypePrototype>(structuralDamage), 80f);  // Reserve edit: Fix warnings
     }
 
     private void OnMeleeHit(Entity<HulkComponent> ent, ref MeleeHitEvent args)

@@ -1,7 +1,4 @@
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 Roudenn <romabond091@gmail.com>
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
+﻿// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
 using System.Numerics;
@@ -30,7 +27,7 @@ public sealed class FireControlNavControl : BaseShuttleControl
     [Dependency] private readonly IMapManager _mapManager = default!;
     private readonly SharedShuttleSystem _shuttles;
     private readonly SharedTransformSystem _transform;
-    private readonly IEntitySystemManager _sysManager = default!;
+    // private readonly IEntitySystemManager _sysManager = default!; // Reserve edit: Fix warnings
     private readonly RadarBlipsSystem _blips;
     private readonly SharedPhysicsSystem _physics;
 

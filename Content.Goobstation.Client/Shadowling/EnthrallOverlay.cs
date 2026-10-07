@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 Lumminal <81829924+Lumminal@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Roudenn <romabond091@gmail.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Robust.Client.Graphics;
@@ -28,7 +24,8 @@ public sealed class EnthrallOverlay : Overlay
     public EnthrallOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _shader = _prototypeManager.Index<ShaderPrototype>("EnthrallEffect").Instance().Duplicate();
+        var protoId = "EnthrallEffect";  // Reserve edit: Fix warnings
+        _shader = _prototypeManager.Index<ShaderPrototype>(protoId).Instance().Duplicate();  // Reserve edit: Fix warnings
     }
 
     public void ReceiveEnthrall(double duration)

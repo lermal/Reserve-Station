@@ -1,11 +1,10 @@
-// SPDX-FileCopyrightText: 2026 Space Station 14 Contributors
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Robust.Shared.Configuration;
 
 namespace Content.Shared._Starlight.CCVar;
 
+[CVarDefs]
 public sealed partial class StarlightCCVars
 {
     // Taken from https://github.com/RMC-14/RMC-14

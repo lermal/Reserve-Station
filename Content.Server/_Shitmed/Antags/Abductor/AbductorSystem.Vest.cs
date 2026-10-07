@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2025 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared._Shitmed.Antags.Abductor;
@@ -28,7 +24,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
     private void OnEquipped(Entity<AbductorVestComponent> ent, ref GotEquippedEvent args)
     {
-        if (args.Equipee != null && !HasComp<StealthComponent>(args.Equipee) && ent.Comp.CurrentState != AbductorArmorModeType.Combat)
+        if (!HasComp<StealthComponent>(args.Equipee) && ent.Comp.CurrentState != AbductorArmorModeType.Combat)  // Reserve edit: Fix warnings
         {
             AddComp<StealthComponent>(args.Equipee);
             AddComp<StealthOnMoveComponent>(args.Equipee);
@@ -37,7 +33,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
     private void OnUnequipped(Entity<AbductorVestComponent> ent, ref GotUnequippedEvent args)
     {
-        if (args.Equipee != null && HasComp<StealthComponent>(args.Equipee))
+        if (HasComp<StealthComponent>(args.Equipee))  // Reserve edit: Fix warnings
         {
             RemComp<StealthComponent>(args.Equipee);
             RemComp<StealthOnMoveComponent>(args.Equipee);
@@ -47,12 +43,12 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     private void OnItemSwitch(EntityUid uid, AbductorVestComponent component, ref ItemSwitchedEvent args)
     {
 
-        if (Enum.TryParse<AbductorArmorModeType>(args.State, ignoreCase: true, out var State))
-            component.CurrentState = State;
+        if (Enum.TryParse<AbductorArmorModeType>(args.State, ignoreCase: true, out var state))
+            component.CurrentState = state;
 
         var user = Transform(uid).ParentUid;
 
-        if (State == AbductorArmorModeType.Combat)
+        if (state == AbductorArmorModeType.Combat)
         {
             if (TryComp<ClothingComponent>(uid, out var clothingComponent))
                 _clothing.SetEquippedPrefix(uid, "combat", clothingComponent);

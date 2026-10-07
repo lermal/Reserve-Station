@@ -1,6 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Aviu00 <aviu00@protonmail.com>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Alert;
@@ -44,12 +41,11 @@ public sealed partial class NinjutsuSneakAttackComponent : Component
     public SoundSpecifier AssassinateSoundArmed =
             new SoundPathSpecifier("/Audio/_Goobstation/Weapons/Effects/guillotine.ogg");
 
-    // This should be LocId but combos names don't use locale anyway
     [DataField]
     public string AssassinateComboName = "Assassinate";
 
     [DataField]
-    public string TakedownComboName = "Ninjutsu Takedown";
+    public string TakedownComboName = "Ninjutsu-Takedown"; // Reserve edit: localization #359
 
     [DataField]
     public ProtoId<AlertPrototype> Alert = "SneakAttack";

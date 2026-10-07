@@ -1,7 +1,4 @@
-// SPDX-FileCopyrightText: 2025 Aviu00 <aviu00@protonmail.com>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
+﻿// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
 using Content.Shared.Damage;
@@ -12,7 +9,7 @@ namespace Content.Goobstation.Shared.Weapons.Multihit;
 
 public sealed class ActiveMultihitSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
+    // [Dependency] private readonly INetManager _net = default!; // Reserve edit: Fix warnings
 
     public override void Initialize()
     {

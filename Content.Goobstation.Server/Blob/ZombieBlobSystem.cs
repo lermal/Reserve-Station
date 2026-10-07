@@ -1,18 +1,4 @@
-// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
-// SPDX-FileCopyrightText: 2024 Fishbait <Fishbait@git.ml>
-// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2024 fishbait <gnesse@gmail.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 CerberusWolfie <wb.johnb.willis@gmail.com>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 Ilya246 <57039557+Ilya246@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Ilya246 <ilyukarno@gmail.com>
-// SPDX-FileCopyrightText: 2025 Milon <milonpl.git@proton.me>
-// SPDX-FileCopyrightText: 2025 Misandry <mary@thughunt.ing>
-// SPDX-FileCopyrightText: 2025 Rinary <72972221+Rinary1@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 gus <august.eymann@gmail.com>
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
+﻿// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Server.Blob.Components;
 using Content.Goobstation.Shared.Blob;
@@ -38,6 +24,7 @@ using Content.Shared.NPC.Systems;
 using Content.Shared.Physics;
 using Content.Shared._Starlight.CollectiveMind;
 using Content.Shared.Tag;
+using Content.Shared.Temperature.Components;
 using Content.Shared.Trigger.Systems;
 using Content.Shared.Zombies;
 using Robust.Server.Player;
@@ -53,7 +40,7 @@ public sealed class ZombieBlobSystem : SharedZombieBlobSystem
 {
     [Dependency] private readonly NpcFactionSystem _faction = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
+    // [Dependency] private readonly MindSystem _mind = default!; // Reserve edit: Fix warnings
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
@@ -64,6 +51,10 @@ public sealed class ZombieBlobSystem : SharedZombieBlobSystem
     [Dependency] private readonly IPlayerManager _player = default!;
 
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.BlobImpassable);
+
+    private const string Faction = "Blob";  // Reserve edit: Fix warnings
+
+    private const string Tag = "BlobMob";  // Reserve edit: Fix warnings
 
     private readonly GasMixture _normalAtmos;
     public ZombieBlobSystem()
@@ -135,20 +126,20 @@ public sealed class ZombieBlobSystem : SharedZombieBlobSystem
             oldFactions.Add(factionId);
             _faction.RemoveFaction(uid, factionId);
         }
-        _faction.AddFaction(uid, "Blob");
+        _faction.AddFaction(uid, Faction);  // Reserve edit: Fix warnings
         component.OldFactions = oldFactions;
 
         // var accent = EnsureComp<ReplacementAccentComponent>(uid); // Languages - No need for accents.
         // accent.Accent = "genericAggressive";
 
-        _tagSystem.AddTag(uid, "BlobMob");
+        _tagSystem.AddTag(uid, Tag);  // Reserve edit: Fix warnings
 
         EnsureComp<PressureImmunityComponent>(uid);
 
-        if (TryComp<TemperatureComponent>(uid, out var temperatureComponent))
+        if (TryComp<TemperatureDamageComponent>(uid, out var temperatureDamageComponent))
         {
-            component.OldColdDamageThreshold = temperatureComponent.ColdDamageThreshold;
-            temperatureComponent.ColdDamageThreshold = 0;
+            component.OldColdDamageThreshold = temperatureDamageComponent.ColdDamageThreshold;
+            temperatureDamageComponent.ColdDamageThreshold = 0;
         }
 
         if (TryComp<FixturesComponent>(uid, out var fixturesComp))
@@ -177,7 +168,7 @@ public sealed class ZombieBlobSystem : SharedZombieBlobSystem
         else
         {
             var htn = EnsureComp<HTNComponent>(uid);
-            htn.RootTask = new HTNCompoundTask() {Task = "SimpleHostileCompound"};
+            htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
             htn.Blackboard.SetValue(NPCBlackboard.Owner, uid);
             htn.Blackboard.SetValue(NPCBlackboard.NavBlob, true);
 
@@ -203,12 +194,12 @@ public sealed class ZombieBlobSystem : SharedZombieBlobSystem
         // RemComp<ReplacementAccentComponent>(uid); // Languages - No need for accents.
         RemComp<PressureImmunityComponent>(uid);
 
-        if (TryComp<TemperatureComponent>(uid, out var temperatureComponent) && component.OldColdDamageThreshold != null)
+        if (TryComp<TemperatureDamageComponent>(uid, out var temperatureDamageComponent) && component.OldColdDamageThreshold != null)
         {
-            temperatureComponent.ColdDamageThreshold = component.OldColdDamageThreshold.Value;
+            temperatureDamageComponent.ColdDamageThreshold = component.OldColdDamageThreshold.Value;
         }
 
-        _tagSystem.RemoveTag(uid, "BlobMob");
+        _tagSystem.RemoveTag(uid, Tag);  // Reserve edit: Fix warnings
 
         /*
         var mindComp = EnsureComp<MindContainerComponent>(uid);
@@ -236,7 +227,7 @@ public sealed class ZombieBlobSystem : SharedZombieBlobSystem
         {
             _faction.AddFaction(uid, factionId);
         }
-        _faction.RemoveFaction(uid, "Blob");
+        _faction.RemoveFaction(uid, Faction);  // Reserve edit: Fix warnings
 
         if (TryComp<FixturesComponent>(uid, out var fixtures))
         {

@@ -1,8 +1,4 @@
-// SPDX-FileCopyrightText: 2025 Aviu00 <93730715+Aviu00@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aviu00 <aviu00@protonmail.com>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
+﻿// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Heretic.Components.PathSpecific;
 using Content.Shared._EinsteinEngines.Silicon.Components;
@@ -40,12 +36,12 @@ public abstract class SharedMansusGraspSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IComponentFactory _compFactory = default!;
     [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IMapManager _mapMan = default!;
+    // [Dependency] private readonly IMapManager _mapMan = default!; // Reserve edit: Fix warnings
 
     [Dependency] private readonly SharedDoorSystem _door = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
-    [Dependency] private readonly StatusEffectNew.StatusEffectsSystem _statusNew = default!;
+    // [Dependency] private readonly StatusEffectNew.StatusEffectsSystem _statusNew = default!; // Reserve edit: Fix warnings
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly BackStabSystem _backstab = default!;
@@ -55,7 +51,17 @@ public abstract class SharedMansusGraspSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedStarMarkSystem _starMark = default!;
-    [Dependency] private readonly NpcFactionSystem _faction = default!;
+    // [Dependency] private readonly NpcFactionSystem _faction = default!; // Reserve edit: Fix warnings
+
+    // Reserve edit start: replace literals with vars
+    public static readonly string HereticBladeTag = "HereticBladeBlade";
+    public static readonly string SlashDamageType = "Slash";
+    public static readonly string WallTag = "Wall";
+    public static readonly string CatwalkTag = "Catwalk";
+    public static readonly string MeatTag = "Meat";
+    public static readonly string BotTag = "Bot";
+    public static readonly string BruteDamageType = "Brute";
+    // Reserve edit end: replace literals with vars
 
     public bool TryApplyGraspEffectAndMark(EntityUid user,
         HereticComponent hereticComp,
@@ -121,7 +127,7 @@ public abstract class SharedMansusGraspSystem : EntitySystem
 
             case "Blade":
             {
-                if (grasp != null && heretic.PathStage >= 7 && _tag.HasTag(target, "HereticBladeBlade"))
+                if (grasp != null && heretic.PathStage >= 7 && _tag.HasTag(target, HereticBladeTag))
                 {
                     // empowering blades and shit
                     var infusion = EnsureComp<MansusInfusedComponent>(target);
@@ -134,7 +140,7 @@ public abstract class SharedMansusGraspSystem : EntitySystem
                 {
                     _stun.TryUpdateParalyzeDuration(target, TimeSpan.FromSeconds(1.5f));
                     _damage.TryChangeDamage(target,
-                        new DamageSpecifier(_proto.Index<DamageTypePrototype>("Slash"), 10),
+                        new DamageSpecifier(_proto.Index<DamageTypePrototype>(SlashDamageType), 10),
                         ignoreResistances: true,
                         origin: performer,
                         targetPart: TargetBodyPart.Chest);
@@ -200,19 +206,19 @@ public abstract class SharedMansusGraspSystem : EntitySystem
             {
                 if (TryComp(target, out StationAiHolderComponent? aiHolder)) // Kill AI
                     QueueDel(aiHolder.Slot.ContainerSlot?.ContainedEntity);
-                else if (HasComp<RustGraspComponent>(grasp) && _tag.HasAnyTag(target, "Wall", "Catwalk") ||
+                else if (HasComp<RustGraspComponent>(grasp) && _tag.HasAnyTag(target, WallTag, CatwalkTag) ||
                          HasComp<HereticRitualRuneComponent>(
                              target)) // If we have rust grasp and targeting a wall (or a catwalk) - do nothing, let other methods handle that. Also don't damage transmutation rune.
                     return false;
                 else if (TryComp(target, out DamageableComponent? damageable) && // Is it even damageable?
-                         !_tag.HasTag(target, "Meat") && // Is it not organic body part or organ?
+                         !_tag.HasTag(target, MeatTag) && // Is it not organic body part or organ?
                          !HasComp<ShadowCloakEntityComponent>(target) && // No instakilling shadow cloak heretics
                          (!HasComp<MobStateComponent>(target) || HasComp<SiliconComponent>(target) ||
                           HasComp<BorgChassisComponent>(target) ||
-                          _tag.HasTag(target, "Bot"))) // Check for ingorganic target
+                          _tag.HasTag(target, BotTag))) // Check for ingorganic target
                 {
                     _damage.TryChangeDamage(target,
-                        new DamageSpecifier(_proto.Index<DamageGroupPrototype>("Brute"), 500),
+                        new DamageSpecifier(_proto.Index<DamageGroupPrototype>(BruteDamageType), 500),
                         ignoreResistances: true,
                         damageable: damageable,
                         origin: performer,

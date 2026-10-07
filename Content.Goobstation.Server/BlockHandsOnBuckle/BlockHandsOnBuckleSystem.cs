@@ -1,7 +1,4 @@
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 TheBorzoiMustConsume <197824988+TheBorzoiMustConsume@users.noreply.github.com>
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
+﻿// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Common.BlockHandsOnBuckle;
 using Content.Shared.Inventory.VirtualItem;
@@ -19,7 +16,7 @@ public sealed class BlockHandsOnBuckleSystem : EntitySystem
 
     [Dependency] private readonly SharedVirtualItemSystem _virtualItem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    // [Dependency] private readonly InventorySystem _inventorySystem = default!; // Reserve edit: Fix warnings
     public override void Initialize()
     {
         base.Initialize();

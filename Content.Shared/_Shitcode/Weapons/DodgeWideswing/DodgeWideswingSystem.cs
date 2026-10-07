@@ -1,9 +1,4 @@
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Ilya246 <57039557+Ilya246@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Misandry <mary@thughunt.ing>
-// SPDX-FileCopyrightText: 2025 gus <august.eymann@gmail.com>
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
+﻿// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
@@ -15,9 +10,9 @@ namespace Content.Shared._Goobstation.Weapons.DodgeWideswing;
 
 public sealed class DodgeWideswingSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
+    // [Dependency] private readonly SharedPopupSystem _popup = default!; // Reserve edit: Fix warnings
+    // [Dependency] private readonly IRobustRandom _random = default!; // Reserve edit: Fix warnings
+    // [Dependency] private readonly SharedStaminaSystem _stamina = default!; // Reserve edit: Fix warnings
 
     public override void Initialize()
     {

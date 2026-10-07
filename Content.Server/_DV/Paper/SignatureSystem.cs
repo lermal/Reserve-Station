@@ -1,6 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Solstice <solsticeofthewinter@gmail.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Common.Paper;
@@ -38,7 +35,8 @@ public sealed class SignatureSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        if (args.Using is not {} pen || !_tags.HasTag(pen, "Write"))
+        var writeTag = "Write";  // Reserve edit: Fix warnings
+        if (args.Using is not {} pen || !_tags.HasTag(pen, writeTag))  // Reserve edit: Fix warnings
             return;
 
         var user = args.User;

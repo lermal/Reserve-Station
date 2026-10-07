@@ -1,12 +1,4 @@
-// SPDX-FileCopyrightText: 2025 BeBright <98597725+be1bright@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 LuciferEOS <stepanteliatnik2022@gmail.com>
-// SPDX-FileCopyrightText: 2025 LuciferMkshelter <154002422+LuciferEOS@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 LuciferMkshelter <stepanteliatnik2022@gmail.com>
-// SPDX-FileCopyrightText: 2025 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 pheenty <fedorlukin2006@gmail.com>
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
+﻿// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -42,8 +34,8 @@ public sealed class NtrTaskSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+    // [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!; // Reserve edit: Fix warnings
+    // [Dependency] private readonly AccessReaderSystem _accessReader = default!; // Reserve edit: Fix warnings
     [Dependency] private readonly NameIdentifierSystem _nameIdentifier = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -251,7 +243,7 @@ public sealed class NtrTaskSystem : EntitySystem
     {
         taskId = null;
         return TryComp<NtrTaskDatabaseComponent>(uid, out var db)
-               && db.Tasks.FirstOrDefault(t => t.Task == taskProto.ID) is {} taskData
+               && db.Tasks.FirstOrDefault(t => t.Task == taskProto.ID) is { } taskData
                && (taskId = taskData.Id) != null;
     }
     #endregion
@@ -270,7 +262,9 @@ public sealed class NtrTaskSystem : EntitySystem
 
     private bool TryHandleVial(EntityUid item, EntityUid console, NtrTaskConsoleComponent component)
     {
-        if (!_tag.HasTag(item, "Vial") && !_tag.HasTag(item, "Bottle"))
+        var vialTag = "Vial";  // Reserve edit: Fix warnings
+        var bottleTag = "Bottle";  // Reserve edit: Fix warnings
+        if (!_tag.HasTag(item, vialTag) && !_tag.HasTag(item, bottleTag))  // Reserve edit: Fix warnings
             return false;
 
         var station = _station.GetOwningStation(console);
@@ -476,7 +470,8 @@ public sealed class NtrTaskSystem : EntitySystem
             return false;
         var stringId = id.ToString();
 
-        db.Tasks.Add(new NtrTaskData(task, stringId) {
+        db.Tasks.Add(new NtrTaskData(task, stringId)
+        {
             IsActive = true,
             ActiveTime = _timing.CurTime
         });

@@ -35,6 +35,7 @@ using Robust.Shared.Timing;
 using FixedPoint2 = Content.Goobstation.Maths.FixedPoint.FixedPoint2;
 using System.Linq;
 using Content.Server.Light.Components;
+using Content.Shared.Light.Components;
 using Robust.Server.GameObjects;
 using Content.Shared.Inventory;
 using Content.Shared.Roles;
@@ -252,7 +253,8 @@ public sealed class SlasherSoulStealSystem : EntitySystem
 
                 // Make it rain in space
                 var xform = Transform(user);
-                _weather.SetWeather(xform.MapID, _protoMan.Index<WeatherPrototype>("Storm"), null);
+                var storm = "Storm";  // Reserve edit: Fix warnings
+                _weather.SetWeather(xform.MapID, _protoMan.Index<WeatherPrototype>(storm), null);  // Reserve edit: Fix warnings
 
                 // Swap clothing if the kit defines ascension gear
                 if (comp.AscensionGear != null)

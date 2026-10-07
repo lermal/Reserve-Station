@@ -1,10 +1,4 @@
-// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2024 ScarKy0 <106310278+ScarKy0@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Ilya246 <57039557+Ilya246@users.noreply.github.com>
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
+﻿// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
@@ -25,11 +19,11 @@ namespace Content.Server.Chemistry.EntitySystems;
 public sealed class SolutionInjectWhileEmbeddedSystem : EntitySystem
 {
 	[Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
+    // [Dependency] private readonly BloodstreamSystem _bloodstream = default!; // Reserve edit: Fix warnings
+    // [Dependency] private readonly InventorySystem _inventory = default!; // Reserve edit: Fix warnings
+    // [Dependency] private readonly SharedPopupSystem _popup = default!; // Reserve edit: Fix warnings
+    // [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!; // Reserve edit: Fix warnings
+    // [Dependency] private readonly TagSystem _tag = default!; // Reserve edit: Fix warnings
 
     public override void Initialize()
     {

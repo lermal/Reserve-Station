@@ -1,46 +1,21 @@
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <aiden@djkraz.com>
-// SPDX-FileCopyrightText: 2025 Aviu00 <93730715+Aviu00@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 DrSmugleaf <10968691+DrSmugleaf@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 DrSmugleaf <drsmugleaf@gmail.com>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 Ichaie <167008606+Ichaie@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Ilya246 <57039557+Ilya246@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 JORJ949 <159719201+JORJ949@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Misandry <mary@thughunt.ing>
-// SPDX-FileCopyrightText: 2025 MortalBaguette <169563638+MortalBaguette@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 NazrinNya <137837419+NazrinNya@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Panela <107573283+AgentePanela@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2025 Poips <Hanakohashbrown@gmail.com>
-// SPDX-FileCopyrightText: 2025 PuroSlavKing <103608145+PuroSlavKing@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 SX-7 <sn1.test.preria.2002@gmail.com>
-// SPDX-FileCopyrightText: 2025 Solstice <solsticeofthewinter@gmail.com>
-// SPDX-FileCopyrightText: 2025 Whisper <121047731+QuietlyWhisper@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 blobadoodle <me@bloba.dev>
-// SPDX-FileCopyrightText: 2025 coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 deltanedas <39013340+deltanedas@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 deltanedas <@deltanedas:kde.org>
-// SPDX-FileCopyrightText: 2025 github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 gus <august.eymann@gmail.com>
-// SPDX-FileCopyrightText: 2025 kamkoi <poiiiple1@gmail.com>
-// SPDX-FileCopyrightText: 2025 nazrin <tikufaev@outlook.com>
-// SPDX-FileCopyrightText: 2025 shibe <95730644+shibechef@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 tetra <169831122+Foralemes@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Linq; // Goob - ghost cosmetics
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
 using Content.Goobstation.Common.CCVar;
+using Content.Goobstation.Shared.GhostCosmetics; // Goob - ghost cosmetics
+using Content.Shared._RMC14.GhostColor; // Goob - ghost cosmetics
 using Content.Shared._RMC14.LinkAccount;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map; // Goob - ghost cosmetics
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes; // Goob - ghost cosmetics
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Client.UserInterface.Controls; // Goob - ghost cosmetics
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.LineEdit;
 using static Robust.Client.UserInterface.Controls.TabContainer;
@@ -51,13 +26,17 @@ public sealed class LinkAccountUIController : UIController, IOnSystemChanged<Lin
 {
     [Dependency] private readonly IClipboardManager _clipboard = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!; // Goob - ghost cosmetics
+    [Dependency] private readonly IEntityNetworkManager _entityNet = default!; // Goob - ghost cosmetics
     [Dependency] private readonly LinkAccountManager _linkAccount = default!;
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!; // Goob - ghost cosmetics
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IUriOpener _uriOpener = default!;
 
     private LinkAccountWindow? _window;
     private PatronPerksWindow? _patronPerksWindow;
+    private EntityUid? _cosmeticsPreviewGhost; // Goob - ghost cosmetics
     private TimeSpan _disableUntil;
 
     private Guid _code;
@@ -93,7 +72,8 @@ public sealed class LinkAccountUIController : UIController, IOnSystemChanged<Lin
 
         var user = FormattedMessage.EscapeText(message.User);
         var msg = FormattedMessage.EscapeText(message.Message);
-        gui.LobbyMessageLabel.SetMarkupPermissive($"[font size=20]Lobby message by: {user}\n{msg}[/font]");
+        gui.LobbyMessageLabel.SetMarkupPermissive($"[font size=20]{Loc.GetString("rmc-ui-lobby-message-by")} [bold][color=#c23c2d]{user}[/color][/bold]\n{msg}[/font]");  // Reserve edit: Maecenas System
+        gui.LobbyMessagePanel.Visible = true;  // Reserve edit: Maecenas System
     }
 
     public void ToggleWindow()
@@ -104,7 +84,10 @@ public sealed class LinkAccountUIController : UIController, IOnSystemChanged<Lin
             _window.OnClose += () => _window = null;
             _window.Label.SetMarkupPermissive($"{Loc.GetString("rmc-ui-link-discord-account-text")}");
             if (_linkAccount.Linked)
-                _window.Label.SetMarkupPermissive($"{Loc.GetString("rmc-ui-link-discord-account-already-linked")}\n\n{Loc.GetString("rmc-ui-link-discord-account-text")}");
+            {
+                _window.Label.SetMarkupPermissive($"{Loc.GetString("rmc-ui-link-discord-account-already-linked")}");  // Reserve edit: Maecenas System
+                _window.CopyButton.Disabled = true;  // Reserve edit: Maecenas System
+            }
 
             _window.CopyButton.OnPressed += _ =>
             {
@@ -145,7 +128,11 @@ public sealed class LinkAccountUIController : UIController, IOnSystemChanged<Lin
         if (_patronPerksWindow == null)
         {
             _patronPerksWindow = new PatronPerksWindow();
-            _patronPerksWindow.OnClose += () => _patronPerksWindow = null;
+            _patronPerksWindow.OnClose += () =>
+            {
+                _patronPerksWindow = null;
+                DeleteGhostCosmeticsPreview(); // Goob - ghost cosmetics
+            };
 
             var tier = _linkAccount.Tier;
             SetTabTitle(_patronPerksWindow.LobbyMessageTab, Loc.GetString("rmc-ui-lobby-message"));
@@ -168,6 +155,30 @@ public sealed class LinkAccountUIController : UIController, IOnSystemChanged<Lin
             _patronPerksWindow.GhostColorSliders.OnColorChanged += OnGhostColorChanged;
             _patronPerksWindow.GhostColorClearButton.OnPressed += OnGhostColorClear;
             _patronPerksWindow.GhostColorSaveButton.OnPressed += OnGhostColorSave;
+
+            // Goob start - ghost cosmetics
+            SetTabTitle(_patronPerksWindow.GhostCosmeticsTab, Loc.GetString("goob-ui-ghost-cosmetics"));
+            SetTabVisible(_patronPerksWindow.GhostCosmeticsTab, tier is { GhostCosmetics: true } or { GhostParticles: true });
+
+            var cosmetics = _linkAccount.GhostCosmetics;
+            _patronPerksWindow.GhostParticlesRow.Visible = tier is { GhostParticles: true };
+            _patronPerksWindow.GhostHatRow.Visible = tier is { GhostCosmetics: true };
+            _patronPerksWindow.GhostMaskRow.Visible = tier is { GhostCosmetics: true };
+            PopulateGhostCosmetics(_patronPerksWindow.GhostParticlesButton, GhostCosmeticCategory.Particles, cosmetics?.Particles);
+            PopulateGhostCosmetics(_patronPerksWindow.GhostHatButton, GhostCosmeticCategory.Hat, cosmetics?.Hat);
+            PopulateGhostCosmetics(_patronPerksWindow.GhostMaskButton, GhostCosmeticCategory.Mask, cosmetics?.Mask);
+            _patronPerksWindow.GhostCosmeticsSaveButton.OnPressed += OnGhostCosmeticsSave;
+
+            if (tier is { GhostCosmetics: true } or { GhostParticles: true })
+            {
+                _cosmeticsPreviewGhost = _entityManager.SpawnEntity("GhostCosmeticsPreviewDummy", MapCoordinates.Nullspace);
+                if (_entityManager.TryGetComponent(_cosmeticsPreviewGhost.Value, out GhostColorComponent? previewColor))
+                    previewColor.Color = _linkAccount.GhostColor;
+
+                _patronPerksWindow.GhostCosmeticsPreview.SetEntity(_cosmeticsPreviewGhost);
+                UpdateGhostCosmeticsPreview();
+            }
+            // Goob end
 
             UpdateExamples();
 
@@ -202,6 +213,7 @@ public sealed class LinkAccountUIController : UIController, IOnSystemChanged<Lin
         }
 
         _net.ClientSendMessage(new RMCChangeLobbyMessageMsg { Text = text });
+        _linkAccount.LobbyMessage = new SharedRMCLobbyMessage(text);  // Reserve edit: Maecenas System
     }
 
     private void OnNTShoutoutSave(ButtonEventArgs args)
@@ -217,6 +229,7 @@ public sealed class LinkAccountUIController : UIController, IOnSystemChanged<Lin
         }
 
         _net.ClientSendMessage(new RMCChangeNTShoutoutMsg { Name = text });
+        _linkAccount.RoundEndShoutout = new SharedRMCRoundEndShoutouts(text);  // Reserve edit: Maecenas System
         UpdateExamples();
     }
 
@@ -235,6 +248,7 @@ public sealed class LinkAccountUIController : UIController, IOnSystemChanged<Lin
 
         _patronPerksWindow.GhostColorSliders.Color = Color.White;
         _net.ClientSendMessage(new RMCClearGhostColorMsg());
+        _linkAccount.GhostColor = null;  // Reserve edit: Maecenas System
     }
 
     private void OnGhostColorSave(ButtonEventArgs args)
@@ -243,7 +257,82 @@ public sealed class LinkAccountUIController : UIController, IOnSystemChanged<Lin
             return;
 
         _net.ClientSendMessage(new RMCChangeGhostColorMsg { Color = _patronPerksWindow.GhostColorSliders.Color });
+        _linkAccount.GhostColor = _patronPerksWindow.GhostColorSliders.Color;  // Reserve edit: Maecenas System
     }
+
+    // Goob start - ghost cosmetics
+    private void PopulateGhostCosmetics(OptionButton button, GhostCosmeticCategory category, string? current)
+    {
+        button.Clear();
+        button.AddItem(Loc.GetString("goob-ui-ghost-cosmetics-none"), 0);
+
+        var cosmetics = _prototype.EnumeratePrototypes<GhostCosmeticPrototype>()
+            .Where(cosmetic => cosmetic.Category == category)
+            .OrderBy(cosmetic => Loc.GetString(cosmetic.Name))
+            .ToList();
+
+        for (var i = 0; i < cosmetics.Count; i++)
+        {
+            var cosmetic = cosmetics[i];
+            button.AddItem(Loc.GetString(cosmetic.Name), i + 1);
+            button.SetItemMetadata(button.ItemCount - 1, cosmetic.ID);
+
+            if (cosmetic.ID == current)
+                button.Select(button.ItemCount - 1);
+        }
+
+        button.OnItemSelected += args =>
+        {
+            button.SelectId(args.Id);
+            UpdateGhostCosmeticsPreview();
+        };
+    }
+
+    private void UpdateGhostCosmeticsPreview()
+    {
+        if (_patronPerksWindow == null || _cosmeticsPreviewGhost is not { } ghost)
+            return;
+
+        _entityManager.RemoveComponent<GhostCosmeticsComponent>(ghost);
+        _entityManager.AddComponent(ghost, new GhostCosmeticsComponent
+        {
+            Hat = ToCosmeticProto(_patronPerksWindow.GhostHatButton.SelectedMetadata as string),
+            Mask = ToCosmeticProto(_patronPerksWindow.GhostMaskButton.SelectedMetadata as string),
+        });
+    }
+
+    private void DeleteGhostCosmeticsPreview()
+    {
+        _entityManager.DeleteEntity(_cosmeticsPreviewGhost);
+        _cosmeticsPreviewGhost = null;
+    }
+
+    private void OnGhostCosmeticsSave(ButtonEventArgs args)
+    {
+        if (_patronPerksWindow is not { IsOpen: true })
+            return;
+
+        _entityNet.SendSystemNetworkMessage(new ChangeGhostCosmeticsEvent
+        {
+            Particles = ToCosmeticProto(_patronPerksWindow.GhostParticlesButton.SelectedMetadata as string),
+            Hat = ToCosmeticProto(_patronPerksWindow.GhostHatButton.SelectedMetadata as string),
+            Mask = ToCosmeticProto(_patronPerksWindow.GhostMaskButton.SelectedMetadata as string),
+        });
+        _linkAccount.GhostCosmetics = new SharedRMCGhostCosmetics(  // Reserve edit: Maecenas System
+            ToCosmeticProto(_patronPerksWindow.GhostParticlesButton.SelectedMetadata as string),
+            ToCosmeticProto(_patronPerksWindow.GhostHatButton.SelectedMetadata as string),
+            ToCosmeticProto(_patronPerksWindow.GhostMaskButton.SelectedMetadata as string)
+        );
+    }
+
+    private static ProtoId<GhostCosmeticPrototype>? ToCosmeticProto(string? id)
+    {
+        if (string.IsNullOrEmpty(id))
+            return null;
+
+        return new ProtoId<GhostCosmeticPrototype>(id);
+    }
+    // Goob end
 
     private void UpdateExamples()
     {

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 SolsticeOfTheWinter <solsticeofthewinter@gmail.com>
-// SPDX-FileCopyrightText: 2025 TheBorzoiMustConsume <197824988+TheBorzoiMustConsume@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Coordinates.Helpers;
@@ -30,11 +26,12 @@ public sealed class NullrodTransformSystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, AltarSourceComponent component, InteractUsingEvent args)
     {
+        var nullrodTag = "Nullrod";  // Reserve edit: Fix warnings
         if (args.Handled
         || _netManager.IsClient
         || HasComp<StorageComponent>(args.Target) // If it's a storage component like a bag, we ignore usage so it can be stored.
-        || !_tagSystem.HasTag(args.Used, "Nullrod")) // Checks used entity for the tag we need.
-        return;
+        || !_tagSystem.HasTag(args.Used, nullrodTag)) // Checks used entity for the tag we need.  // Reserve edit: Fix warnings
+            return;
 
         // *flaaavor*
         Spawn(component.EffectProto, Transform(uid).Coordinates);

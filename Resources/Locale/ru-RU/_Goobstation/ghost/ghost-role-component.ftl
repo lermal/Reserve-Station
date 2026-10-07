@@ -62,7 +62,7 @@ ghost-role-information-navy-captain-rules = Вы не связаны никак�
 
 ghost-role-information-special-operations-officer-name = Офицер специальных операций
 ghost-role-information-special-operations-officer-description = Присылайте, инструктируйте и направляйте отряды экстренного реагирования или другие силы Нанотрейзен. Отправляйте ядерные коды или не отправляйте.
-ghost-role-information-special-operations-officer-rules = Доставьте представителя Nanotrasen живым, остальные - просто залог. Приказы[color=#yellow][bold]капитана флота[/bold][/color] могут изменить это.
+ghost-role-information-special-operations-officer-rules = Доставьте представителя NanoTrasen живым, остальные - просто залог. Приказы[color=#yellow][bold]капитана флота[/bold][/color] могут изменить это.
 
 ghost-role-information-navy-officer-name = Офицер флота
 ghost-role-information-navy-officer-description = Отвечайте на факсы и радиосообщения, адресованные Центральному Командованию. Проведите расследование об станции и экипаже.
@@ -95,7 +95,7 @@ ghost-role-information-bsd-rules = Следуйте приказам, данны
 
 # Халфлайф
 
-ghost-role-information-Gman-name = G-Man
+ghost-role-information-Gman-name = Джи-мэн
 ghost-role-information-Gman-description = Правильный человек, оказавшийся в неподходящем месте, может изменить мир к лучшему.
 ghost-role-information-Gman-rules = Вы не подчиняетесь никаким правилам или границам. Смерть не может удержать вас, как и Нанотрейзен.
 
@@ -106,7 +106,7 @@ ghost-role-information-Hecu-rules = Вы обязаны подчиняться �
 # Карго бингл
 
 ghost-role-cargo-bingle-name = Бингл снабжения
-ghost-role-cargo-bingle-desc = Служите представителю Nanotrasen и его интересам, не кусайте экипаж, помогайте отделу снабжения.
+ghost-role-cargo-bingle-desc = Служите представителю NanoTrasen и его интересам, не кусайте экипаж, помогайте отделу снабжения.
 
 # Роли с шаттлов
 
@@ -179,10 +179,10 @@ objective-issuer-lord-singuloth = [color=#320022]Лорд Сингулот[/colo
 
 ghost-role-information-dark-lord-name = Тёмный лорд
 ghost-role-information-dark-lord-description = Агент Синдиката, созданный в честь повелителя Ситхов, используй свою силу молнии и энергетический меч для достижения своих целей!
-dark-lord-role-greeting = Вы [color=#880808]Тёмный лорд[/color], отправленный синдикатом на эту станцию для выполнения своей грязной работы. Проверьте своё меню персонажа на предмет ваших целей.
+dark-lord-role-greeting = Вы [color=#880808]Тёмный лорд[/color], отправленный Синдикатом на эту станцию для выполнения своей грязной работы. Проверьте своё меню персонажа на предмет ваших целей.
 
 ghost-role-information-chosen-one-name = Избранный
-ghost-role-information-chosen-one-description = Специальный агент, посланный Nanotrasen на станцию, чтобы победить Тёмного лорда.
+ghost-role-information-chosen-one-description = Специальный агент, посланный NanoTrasen на станцию, чтобы победить Тёмного лорда.
 chosen-one-role-greeting = Вы [color=#0087FF]Избранный[/color], вы были отправлены на эту станцию, чтобы победить Тёмного лорда, посланного Синдикатом. Проверьте своё меню персонажа на предмет ваших целей.
 objective-condition-dark-lord-kill-title = Убедитесь, что Тёмный лорд {$targetName} умрёт.
 

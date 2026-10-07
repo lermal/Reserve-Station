@@ -1,7 +1,4 @@
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 gluesniffler <linebarrelerenthusiast@gmail.com>
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
+﻿// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
 using System.Numerics;
@@ -23,8 +20,8 @@ namespace Content.Client._Shitcode.UserActions.Tabs;
 public sealed partial class StatusTabControl : BaseTabControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+    // [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // Reserve edit: Fix warnings
+    // [Dependency] private readonly ISharedPlayerManager _playerManager = default!; // Reserve edit: Fix warnings
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private ClientGameTicker? _gameTicker;

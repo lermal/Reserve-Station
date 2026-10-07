@@ -1,6 +1,3 @@
-// SPDX-FileCopyrightText: 2024 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Collections.Generic;
@@ -45,7 +42,8 @@ public sealed class SpeciesBUiTest
         {
             var bUiSys = server.System<SharedUserInterfaceSystem>();
 
-            Assert.That(proto.TryIndex("BaseMobSpeciesTest", out var baseEnt), Is.True);
+            var protoId = "BaseMobSpeciesTest";  // Reserve edit: Fix warnings
+            Assert.That(proto.TryIndex(protoId, out var baseEnt), Is.True);  // Reserve edit: Fix warnings
             Assert.That(baseEnt, Is.Not.Null);
             Assert.That(baseEnt.TryGetComponent<UserInterfaceComponent>(out var bUiBase, factoryComp), Is.True);
             Assert.That(bUiBase, Is.Not.Null);

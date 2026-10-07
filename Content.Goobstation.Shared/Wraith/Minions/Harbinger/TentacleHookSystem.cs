@@ -1,4 +1,4 @@
-using Content.Goobstation.Shared.Wraith.Events;
+﻿using Content.Goobstation.Shared.Wraith.Events;
 using Content.Shared.Body.Components;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
@@ -23,7 +23,7 @@ public sealed class TentacleHookSystem : EntitySystem
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
+    // [Dependency] private readonly SharedStunSystem _stun = default!; // Reserve edit: Fix warnings
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
 
@@ -59,7 +59,7 @@ public sealed class TentacleHookSystem : EntitySystem
         var visuals = EnsureComp<JointVisualsComponent>(proj);
         visuals.Sprite = ent.Comp.RopeSprite;
         visuals.OffsetA = new Vector2(0f, 0.5f);
-        visuals.Target = GetNetEntity(ent.Owner);
+        visuals.Target = ent.Owner;
         Dirty(proj, visuals);
 
         _audio.PlayPredicted(ent.Comp.HookSound, ent.Owner, ent.Owner);

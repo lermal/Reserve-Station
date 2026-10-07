@@ -1,13 +1,4 @@
-// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
-// SPDX-FileCopyrightText: 2024 Fishbait <Fishbait@git.ml>
-// SPDX-FileCopyrightText: 2024 fishbait <gnesse@gmail.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aviu00 <93730715+Aviu00@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Misandry <mary@thughunt.ing>
-// SPDX-FileCopyrightText: 2025 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2025 gus <august.eymann@gmail.com>
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
+﻿// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -36,7 +27,7 @@ namespace Content.Goobstation.Server.Blob.GameTicking;
 
 public sealed class BlobRuleSystem : GameRuleSystem<BlobRuleComponent>
 {
-    [Dependency] private readonly MindSystem _mindSystem = default!;
+    // [Dependency] private readonly MindSystem _mindSystem = default!; // Reserve edit: Fix warnings
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly NukeCodePaperSystem _nukeCode = default!;
@@ -129,7 +120,7 @@ public sealed class BlobRuleSystem : GameRuleSystem<BlobRuleComponent>
             && _roundEndSystem.ExpectedCountdownEnd != null
             && !_emergency.EmergencyShuttleArrived)
         {
-            _roundEndSystem.CancelRoundEndCountdown(checkCooldown: false);
+            _roundEndSystem.CancelRoundEndCountdown(forceRecall: true);
             _chatSystem.DispatchStationAnnouncement(stationUid,
                 Loc.GetString("blob-alert-recall-shuttle"),
                 Loc.GetString("Station"),
@@ -138,7 +129,7 @@ public sealed class BlobRuleSystem : GameRuleSystem<BlobRuleComponent>
                 Color.Red);
         }
         else if (blobTilesCount >= (stationUid.Comp?.StageBegin ?? StationBlobConfigComponent.DefaultStageBegin)
-                 && _roundEndSystem.ExpectedCountdownEnd != null && _emergency.EmergencyShuttleArrived) 
+                 && _roundEndSystem.ExpectedCountdownEnd != null && _emergency.EmergencyShuttleArrived)
         {
             _chatSystem.DispatchStationAnnouncement(stationUid,
                 Loc.GetString("blob-alert-shuttle-arrived"),
@@ -147,7 +138,7 @@ public sealed class BlobRuleSystem : GameRuleSystem<BlobRuleComponent>
                 null,
                 Color.OrangeRed);
         }
-        
+
         switch (blobRuleComp.Stage)
         {
             case BlobStage.Default when blobTilesCount >= (stationUid.Comp?.StageBegin ?? StationBlobConfigComponent.DefaultStageBegin):
