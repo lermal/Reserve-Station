@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Client.Chat.UI;  // Reserve edit: Runechat MapText
+using Content.Goobstation.Common.CCVar;  // Reserve edit: Runechat MapText
 using Content.Shared.MapText;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -18,7 +19,7 @@ public sealed class MapTextSystem : SharedMapTextSystem
 {
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
@@ -68,12 +69,23 @@ public sealed class MapTextSystem : SharedMapTextSystem
             ? Loc.GetString(component.LocText)
             : component.Text;
 
-        if (!_prototypeManager.TryIndex<FontPrototype>(component.FontId, out var fontPrototype))
+        // Reserve edit start: Runechat MapText
+        var useRunechat = _configManager.GetCVar(GoobCVars.ChatRunechat);
+        var fontId = component.FontId;
+
+        if (useRunechat && string.Equals(fontId, SharedMapTextComponent.DefaultFont, StringComparison.Ordinal))
+        {
+            component.CachedFont = new VectorFont(_resourceCache.GetResource<FontResource>(RunechatSheetlet.FontPath), component.FontSize);
+            return;
+        }
+        // Reserve edit end: Runechat MapText
+
+        if (!_prototypeManager.TryIndex<FontPrototype>(fontId, out var fontPrototype))  // Reserve edit: Runechat MapText
         {
             component.CachedText = Loc.GetString("map-text-font-error");
             component.Color = Color.Red;
 
-            if(_prototypeManager.TryIndex<FontPrototype>(SharedMapTextComponent.DefaultFont, out var @default))
+            if (_prototypeManager.TryIndex<FontPrototype>(SharedMapTextComponent.DefaultFont, out var @default))
                 component.CachedFont = new VectorFont(_resourceCache.GetResource<FontResource>(@default.Path), 14);
             return;
         }
